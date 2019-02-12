@@ -9,8 +9,6 @@ AFRAME.registerComponent('play-on-click', {
     this.el.addEventListener('click', function(){
         if (!video) { return; }
         if (video.paused){
-          console.log('play button clicked')
-          console.log(video.paused)
           video.play();
         }
         

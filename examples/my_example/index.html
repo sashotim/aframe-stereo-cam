@@ -57,12 +57,12 @@
         <a-entity geometry="primitive: plane; width: 1.6; height: 0.9" material="src: /examples/my_example/textures/3d_test_R.png" position="0 0 -3" stereo="eye:right"></a-entity>
 
         <a-entity geometry='primitive: circle; radius: 0.2' position='0 -3.1 0' id="controlsCenter" rotation='-90 0 0' visible='false'>
-            <a-entity geometry='primitive: circle; radius: 0.3' position='0.7 0.4 0' scip-ahead-on-click></a-entity>
-            <a-entity geometry='primitive: circle; radius: 0.3' position='0 0.8 0' play-on-click></a-entity>
-            <a-entity geometry='primitive: circle; radius: 0.3' position='0.7 -0.4 0' zoom-in-on-click></a-entity>
-            <a-entity geometry='primitive: circle; radius: 0.3' position='-0.7 -0.4 0' zoom-out-on-click></a-entity>
-            <a-entity geometry='primitive: circle; radius: 0.3' position='-0.7 0.4 0' replay-on-click></a-entity>
-            <a-entity geometry='primitive: circle; radius: 0.3' position='0 -0.8 0' reset-on-click="event: anEvent; message: Hello, Metaverse!"></a-entity>
+            <a-entity geometry='primitive: circle; radius: 0.3' position='0.7 0.4 0' material='src:/examples/my_example/textures/icons8-forward-30-100.png' scip-ahead-on-click></a-entity>
+            <a-entity geometry='primitive: circle; radius: 0.3' position='0 0.8 0' material='src: /examples/my_example/textures/icons8-play-filled-100.png' play-on-click></a-entity>
+            <a-entity geometry='primitive: circle; radius: 0.3' position='0.7 -0.4 0' material='src:/examples/my_example/textures/zoom-in.png' zoom-in-on-click></a-entity>
+            <a-entity geometry='primitive: circle; radius: 0.3' position='-0.7 -0.4 0' material='src:/examples/my_example/textures/zoom-out.png' zoom-out-on-click></a-entity>
+            <a-entity geometry='primitive: circle; radius: 0.3' position='-0.7 0.4 0' material='src:/examples/my_example/textures/icons8-replay-30-100.png' replay-on-click></a-entity>
+            <a-entity geometry='primitive: circle; radius: 0.3' position='0 -0.8 0' material='src:/examples/my_example/textures/icons8-stop-filled-100.png' reset-on-click="event: anEvent; message: Hello, Metaverse!"></a-entity>
         </a-entity>
 
         <a-entity geometry='primitive: ring; radiusInner: 5.5; radiusOuter: 6' rotation='-90 0 0' position='0 -3 0' material='opacity: 0.5' id='ring'></a-entity>
@@ -73,9 +73,16 @@
         document.querySelector('#ring').addEventListener('click', function(e) {
             console.log('I was clicked at: ', e.detail.intersection.point);
             var controls = document.querySelector('#controlsCenter');
+            document.querySelector('#ring').setAttribute('geometry', 'radiusInner: 6');
             controls.setAttribute('position', e.detail.intersection.point);
             controls.setAttribute('visible', 'true');
             controls.setAttribute('look-at', '[camera]');
+        });
+        
+        document.querySelector('#controlsCenter').addEventListener('click', function(e){
+            console.log(e);
+           e.detail.target.setAttribute('visible', false);
+           document.querySelector('#ring').setAttribute('geometry', 'radiusInner: 5.5');
         });
     </script>
 
