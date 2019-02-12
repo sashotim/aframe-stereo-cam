@@ -163,7 +163,7 @@ module.exports = {
                    var self = this;
 
                    this.el.sceneEl.canvas.onclick = function () {
-                      self.videoEl.play();
+                      // self.videoEl.play();
                    };
 
                    // Signal that click event is added
