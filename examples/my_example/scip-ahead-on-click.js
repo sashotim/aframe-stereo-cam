@@ -1,8 +1,4 @@
 AFRAME.registerComponent('scip-ahead-on-click', {
-  schema: {
-    event: {type: 'string', default: ''},
-    message: {type: 'string', default: 'Hello, World!'}
-  },
 
   init: function () {
     var video = document.querySelector('#Mary');

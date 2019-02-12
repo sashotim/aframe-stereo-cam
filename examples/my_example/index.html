@@ -78,12 +78,13 @@
             controls.setAttribute('visible', 'true');
             controls.setAttribute('look-at', '[camera]');
         });
-        
-        // document.querySelector('#controlsCenter').addEventListener('click', function(e){
-        //     console.log(e);
-        //   e.detail.target.setAttribute('visible', false);
-        //   document.querySelector('#ring').setAttribute('geometry', 'radiusInner: 5.5');
-        // }, true);
+
+        document.querySelector('#controlsCenter').addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.querySelector('#controlsCenter').setAttribute('visible', false);
+            document.querySelector('#ring').setAttribute('geometry', 'radiusInner: 5.5');
+            document.querySelector('#ring').setAttribute('position', '0 -3.1 0');
+        }, false);
     </script>
 
 </body>

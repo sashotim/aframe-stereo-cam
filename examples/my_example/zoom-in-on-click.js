@@ -1,8 +1,4 @@
 AFRAME.registerComponent('zoom-in-on-click', {
-  schema: {
-    event: {type: 'string', default: ''},
-    message: {type: 'string', default: 'Hello, World!'}
-  },
 
   init: function () {
     var camera = document.querySelector('#camera');
