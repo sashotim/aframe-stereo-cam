@@ -15,7 +15,7 @@
     <!--<script src="play-on-window-click.js"></script>-->
     <!--<script src="toggle-play-on-window-click.js"></script>-->
     <script src="play-on-vrdisplayactivate-or-enter-vr.js"></script>
-    <script src="hide-once-playing.js"></script>
+    <!--<script src="hide-once-playing.js"></script>-->
     <script src="get-real-position.js"></script>
     <script src="reset-video-on-click.js"></script>
     <script src="play-video-on-click.js"></script>
@@ -82,8 +82,9 @@
         document.querySelector('#controlsCenter').addEventListener('click', function(e) {
             e.stopPropagation();
             document.querySelector('#controlsCenter').setAttribute('visible', false);
+            document.querySelector('#controlsCenter').setAttribute('position', '0 -3.1 0');
             document.querySelector('#ring').setAttribute('geometry', 'radiusInner: 5.5');
-            document.querySelector('#ring').setAttribute('position', '0 -3.1 0');
+            
         }, false);
     </script>
 
