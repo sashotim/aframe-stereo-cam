@@ -534,40 +534,40 @@
   ],
   "images": [
     {
-      "uri": "textures/RedBloodCells_metallicRoughness.png"
+      "uri": "textures-figure/RedBloodCells_metallicRoughness.png"
     },
     {
-      "uri": "textures/RedBloodCells_normal.jpeg"
+      "uri": "textures-figure/RedBloodCells_normal.jpeg"
     },
     {
-      "uri": "textures/RedBloodCells_baseColor.jpeg"
+      "uri": "textures-figure/RedBloodCells_baseColor.jpeg"
     },
     {
-      "uri": "textures/Proteins_metallicRoughness.png"
+      "uri": "textures-figure/Proteins_metallicRoughness.png"
     },
     {
-      "uri": "textures/Proteins_normal.jpeg"
+      "uri": "textures-figure/Proteins_normal.jpeg"
     },
     {
-      "uri": "textures/Proteins_baseColor.jpeg"
+      "uri": "textures-figure/Proteins_baseColor.jpeg"
     },
     {
-      "uri": "textures/WhiteBloodCells_metallicRoughness.png"
+      "uri": "textures-figure/WhiteBloodCells_metallicRoughness.png"
     },
     {
-      "uri": "textures/WhiteBloodCells_normal.jpeg"
+      "uri": "textures-figure/WhiteBloodCells_normal.jpeg"
     },
     {
-      "uri": "textures/WhiteBloodCells_baseColor.jpeg"
+      "uri": "textures-figure/WhiteBloodCells_baseColor.jpeg"
     },
     {
-      "uri": "textures/Vein_metallicRoughness.png"
+      "uri": "textures-figure/Vein_metallicRoughness.png"
     },
     {
-      "uri": "textures/Vein_normal.jpeg"
+      "uri": "textures-figure/Vein_normal.jpeg"
     },
     {
-      "uri": "textures/Vein_baseColor.jpeg"
+      "uri": "textures-figure/Vein_baseColor.jpeg"
     }
   ],
   "materials": [
@@ -928,7 +928,7 @@
       ]
     }
   ],
-  "textures": [
+  "textures-figure": [
     {
       "sampler": 0,
       "source": 0

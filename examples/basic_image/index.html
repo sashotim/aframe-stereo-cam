@@ -6,7 +6,7 @@
   </head>
   <body>
 
-    <a-scene antialias="true" loading-screen="dotsColor: red; backgroundColor: black">
+    <a-scene antialias="true" loading-screen="dotsColor: red; backgroundColor: black" id='scene'>
       <!-- Paths to left and right images -->
       <a-assets>
         <img id="background" src="/examples/basic_image/textures/R0010192_20181001134315.JPG">
@@ -35,10 +35,173 @@
       <a-entity geometry="primitive: plane; width: 8; height: 4.5" position="0 0 -4" stereo="eye:right" id='screen'>
         <a-entity geometry="primitive: plane; width: 8; height: 4.5" material="src: #videoR" position='0 0 0.1'></a-entity>
       </a-entity>
+      
+      <a-assets>
+          <a-asset-item id="vene" src="/examples/basic_image/textures/scene.gltf"></a-asset-item>
+      </a-assets>
+
+      <a-entity gltf-model="#vene" position='4 0 0'></a-entity>
 
 
 
     </a-scene>
 
+<script src="/aframe-look-at-component.js"></script>
+    <script src="/aframe-stereo-component.js"></script>
+    <script>
+        //     }, false);
+
+        function getPlatformType() {
+            if (navigator.userAgent.match(/mobile/i)) {
+                return 'Mobile';
+            }
+            else if (navigator.userAgent.match(/iPad|Android|Touch/i)) {
+                return 'Tablet';
+            }
+            else {
+                return 'Desktop';
+            }
+        }
+
+        class Entity {
+            constructor(position, geometry, material, id) {
+                this.position = position;
+                this.geometry = geometry;
+                this.material = material;
+                this.id = id;
+            }
+        }
+
+        const renderEntity = (entity, parentId) => {
+            const scene = document.querySelector('#' + parentId);
+
+            let tmpEntity = document.createElement('a-entity');
+            tmpEntity.setAttribute('position', entity.position);
+            tmpEntity.setAttribute('geometry', entity.geometry);
+            tmpEntity.setAttribute('material', entity.material);
+            tmpEntity.setAttribute('id', entity.id);
+
+            scene.appendChild(tmpEntity);
+        };
+
+        const playToggleVideo = () => {
+            let video = document.querySelector('video');
+            video.paused ? video.play() : video.pause();
+        }
+
+        const stopVideo = () => {
+            let video = document.querySelector('video');
+            if (video.currentTime !== 0) {
+                video.currentTime = 0;
+                video.pause();
+            }
+        };
+
+        const scipAhead = () => {
+            let video = document.querySelector('video');
+            video.currentTime = parseFloat(video.currentTime) + 15;
+        };
+
+        const replay = () => {
+            let video = document.querySelector('video');
+            video.currentTime = parseFloat(video.currentTime) - 15;
+        };
+
+        const zoomIn = () => {
+            var camera = document.querySelector('#camera');
+            camera.setAttribute('zoom', parseFloat(camera.getAttribute('zoom')) + 0.25);
+        };
+
+        const zoomOut = () => {
+            var camera = document.querySelector('#camera');
+            camera.setAttribute('zoom', parseFloat(camera.getAttribute('zoom')) - 0.25);
+        };
+
+        const makeControlls = (optionsArr) => {
+            // let cursorPosition = event.detail.intersection.point;
+            // cursorPosition.z += 1;
+            let center = new Entity('0 0 0.1', 'primitive: circle; radius: 0.2', 'color: red', 'center');
+            renderEntity(center, 'controllsSquare');
+            document.querySelector('#center').addEventListener('click', function() {
+                if (visibleControlls) {
+                    hideControlls();
+                    visibleControlls = false;
+                    controllsJustRemoved = true;
+                }
+            });
+            // document.querySelector('#center').setAttribute('look-at', '[camera]');
+
+            let actionCirclesPositions = [
+                { name: 'play', position: '0 1.8 0', callback: playToggleVideo },
+                { name: 'zoomIn', position: '0 -1.1 0', callback: zoomIn },
+                { name: 'zoomOut', position: '0 -0.4 0', callback: zoomOut },
+                { name: 'scip', position: '0 1.1 0', callback: scipAhead },
+                { name: 'replay', position: '0 0.4 0', callback: replay },
+                { name: 'stop', position: '0 -1.8 0', callback: stopVideo }
+            ];
+            actionCirclesPositions.forEach(function(action) {
+                renderEntity(new Entity(action.position, 'primitive: plane; width: 0.5; height: 0.5', 'color: yellow', action.name), 'center');
+                let text = document.createElement('a-text');
+
+                document.querySelector('#' + action.name).appendChild(text);
+                text.setAttribute('value', action.name);
+                text.setAttribute('scale', '0.5');
+                text.setAttribute('position', '-0.2 0 0');
+                text.setAttribute('color', 'black');
+                document.querySelector('#' + action.name).addEventListener('click', action.callback);
+            });
+        };
+        const hideControlls = () => {
+            document.querySelector('#center').setAttribute('position', '0 0 -1');
+        };
+
+        const showControlls = () => {
+            document.querySelector('#center').setAttribute('position', '0 0 0.2');
+        };
+
+
+        const main = () => {
+
+            let controllsSquare = new Entity('-4.25 0 -2.55', 'primitive: plane; width: 1; height: 4.5', 'color: lightgray', 'controllsSquare');
+            renderEntity(controllsSquare, 'scene');
+            document.querySelector('#controllsSquare').setAttribute('look-at', '[camera]');
+
+
+            makeControlls('placeholder');
+            visibleControlls = true;
+
+            switch (getPlatformType()) {
+                case 'Desktop':
+                    document.querySelector('#cursor').setAttribute('cursor', 'rayOrigin: mouse; fuse: false');
+                    document.querySelector('#cursor').setAttribute('visible', 'false');
+
+                    document.querySelector('#controllsSquare').addEventListener('click', function(e) {
+                        if (!visibleControlls && e.target === document.querySelector('#controllsSquare')) {
+                            showControlls();
+                            visibleControlls = true;
+                        }
+                    }, false);
+                    break;
+                case 'Mobile' || 'Tablet':
+                    document.querySelector('#cursor').setAttribute('cursor', 'fuse: true');
+                    document.querySelector('#controllsSquare').addEventListener('click', function() {
+                        if (!visibleControlls && !controllsJustRemoved) {
+                            showControlls();
+                            visibleControlls = true;
+                        }
+                    });
+
+                    document.querySelector('#controllsSquare').addEventListener('mouseleave', function() {
+                        controllsJustRemoved = false;
+                    });
+                    break;
+            }
+        };
+
+
+        let visibleControlls = false;
+        let controllsJustRemoved = false;
+        main();
+    </script>
   </body>
 </html>
